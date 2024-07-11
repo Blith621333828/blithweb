@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blith</title>
+    <style>
+        body {
+            background-color: #36393F;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            font-family: Arial, sans-serif;
+        }
+        .footer {
+            background-color: #333333;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            padding: 30px 0;
+            position: absolute;
+            bottom: 0;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        .footer a {
+            margin: 0 10px;
+        }
+        .footer img {
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+        }
+        .settings-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+        }
+        .settings-container {
+            display: none;
+            position: absolute;
+            top: 50px;
+            right: 10px;
+            width: 200px;
+            background-color: #333333;
+            color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        .settings-header {
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .settings-option {
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            cursor: pointer;
+            text-align: left;
+        }
+        .settings-option:hover {
+            background-color: #444444;
+        }
+        .color-picker {
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            user-select: none; /* Zapobiega zaznaczaniu tekstu */
+        }
+        .color-picker input {
+            border: none; /* Usunięcie obramowania */
+            background: none; /* Usunięcie tła */
+            width: 30px; /* Domyślna szerokość pola wyboru koloru */
+            height: 30px; /* Domyślna wysokość pola wyboru koloru */
+            cursor: pointer;
+        }
+        .color-code {
+            margin-left: 10px; /* Odstęp od pola wyboru koloru */
+            font-size: 14px; /* Rozmiar czcionki kodu koloru */
+        }
+    </style>
+    <script>
+        function saveTheme(theme, color = null) {
+            localStorage.setItem('theme', theme);
+            if (color) {
+                localStorage.setItem('customColor', color);
+            }
+        }
+        
+        function loadTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            const customColor = localStorage.getItem('customColor');
+            if (savedTheme === 'jasny') {
+                setLightTheme();
+            } else if (savedTheme === 'custom' && customColor) {
+                setCustomTheme(customColor);
+                updateColorCode(customColor);
+            } else {
+                setDarkTheme();
+            }
+        }
+        
+        function setLightTheme() {
+            document.body.style.backgroundColor = '#e6e6e6';
+            document.getElementById('settings-container').style.backgroundColor = '#b3b3b3';
+        }
+        
+        function setDarkTheme() {
+            document.body.style.backgroundColor = '#36393F';
+            document.getElementById('settings-container').style.backgroundColor = '#333333';
+        }
+        
+        function setCustomTheme(color) {
+            document.body.style.backgroundColor = color;
+            document.getElementById('settings-container').style.backgroundColor = '#333333';
+        }
+        
+        function chooseTheme(theme) {
+            if (theme === 'jasny') {
+                setLightTheme();
+            } else {
+                setDarkTheme();
+            }
+            saveTheme(theme);
+        }
+        
+        function toggleSettings() {
+            const container = document.getElementById('settings-container');
+            if (container.style.display === 'block') {
+                container.style.display = 'none';
+            } else {
+                container.style.display = 'block';
+            }
+        }
+
+        function changeBackgroundColor(event) {
+            const color = event.target.value;
+            setCustomTheme(color);
+            saveTheme('custom', color);
+            updateColorCode(color);
+        }
+
+        function updateColorCode(color) {
+            const colorCode = document.getElementById('color-code');
+            colorCode.textContent = color.toUpperCase();
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadTheme();
+
+            document.addEventListener('click', function(event) {
+                const container = document.getElementById('settings-container');
+                const button = document.querySelector('.settings-button');
+                if (!container.contains(event.target) && event.target !== button) {
+                    container.style.display = 'none';
+                }
+            });
+
+            const colorPicker = document.querySelector('.color-picker');
+            colorPicker.addEventListener('click', function() {
+                const colorInput = document.getElementById('color-input');
+                colorInput.click(); // Kliknięcie w pole wyboru koloru
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="footer" id="footer">
+        <a href="https://www.instagram.com/playboi_blith/" class="instagram-button">
+            <img src="ig.png" alt="Instagram">
+        </a>
+        <a href="https://github.com/Blith621333828" class="github-button">
+            <img src="github.png" alt="GitHub">
+        </a>
+        <a href="https://discord.gg/tprMsdVemD" class="discord-button">
+            <img src="discord.png" alt="Discord">
+        </a>
+    </div>
+    <img src="settings.png" alt="Settings" class="settings-button" onclick="toggleSettings()">
+    <div id="settings-container" class="settings-container">
+        <div class="settings-header">Wybierz motyw</div>
+        <div class="settings-option" onclick="chooseTheme('ciemny')">Ciemny</div>
+        <div class="settings-option" onclick="chooseTheme('jasny')">Jasny</div>
+        <div class="settings-option">
+            <label for="color-input">Ustaw własny motyw:</label>
+            <div class="color-picker">
+                <input type="color" id="color-input" onchange="changeBackgroundColor(event)">
+                <span id="color-code" class="color-code"></span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
