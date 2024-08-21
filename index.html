@@ -331,9 +331,38 @@ font-size: 24px;
             // Wyświetl stronę główną domyślnie
             showPage('home');
         });
+    function toggleSidebar() {
+        const sidebar = document.getElementById('sidebar');
+        sidebar.style.left = sidebar.style.left === '0px' ? '-250px' : '0px';
+    }
+
+    function selectMenuOption(page) {
+        // Wyświetl wybraną stronę
+        showPage(page);
+
+        // Schowaj menu
+        toggleSidebar();
+    }
+
+    function showPage(page) {
+        const pages = document.querySelectorAll('.page');
+        pages.forEach(p => p.classList.remove('show'));
+        document.getElementById(page).classList.add('show');
+    }
+</script>
+
     </script>
 </head>
 <body>
+<!-- Menu -->
+<div id="sidebar" class="sidebar">
+    <div class="sidebar-header">Menu</div>
+    <a href="javascript:void(0);" class="sidebar-item" onclick="selectMenuOption('home')">Strona główna</a>
+    <a href="javascript:void(0);" class="sidebar-item" onclick="selectMenuOption('projects')">Projekty</a>
+    <a href="javascript:void(0);" class="sidebar-item" onclick="selectMenuOption('contact')">Kontakt</a>
+</div>
+<img src="poll.png" alt="Menu" class="menu-button" onclick="toggleSidebar()">
+
     <div id="sidebar" class="sidebar">
         <div class="sidebar-header">Menu</div>
         <a href="javascript:void(0);" class="sidebar-item" onclick="showPage('home')">Strona główna</a>
