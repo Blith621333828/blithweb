@@ -12,27 +12,118 @@
             background-color: #36393F;
             height: 100vh;
             margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
             font-family: Arial, sans-serif;
             color: #ffffff;
+            overflow-x: hidden;
         }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -250px; /* Ukryty na początku */
+            width: 250px;
+            height: 100vh;
+            background-color: #333333;
+            color: #ffffff;
+            transition: left 0.3s ease; /* Płynne rozwijanie */
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+        }
+
+        .sidebar-header {
+            padding: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            background-color: #444444;
+            text-align: center;
+        }
+
+        .sidebar-item {
+            display: block;
+            padding: 15px;
+            color: #ffffff;
+            text-decoration: none;
+            border-bottom: 1px solid #555555;
+        }
+
+        .sidebar-item:hover {
+            background-color: #555555;
+        }
+
+        .menu-button {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            z-index: 1001;
+        }
+
         .content {
+            padding: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: left;
             gap: 20px;
         }
+
         .logo {
             width: 150px;
             height: auto;
+            cursor: pointer;
         }
+
         .description {
             max-width: 500px;
         }
+
+        .projects-container {
+            display: none;
+            padding: 20px;
+        }
+
+        .projects-header {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .project-button {
+            display: block;
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #555555;
+            color: #ffffff;
+            text-decoration: none;
+            text-align: center;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .project-button:hover {
+            background-color: #777777;
+        }
+
+        .minigames-header {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 20px 0;
+            text-align: center;
+            border-top: 1px solid #555555;
+            padding-top: 10px;
+        }
+
+        .coming-soon {
+            text-align: center;
+            color: #ffffff;
+            font-size: 24px;
+            font-weight: bold;
+            padding: 50px;
+        }
+
         .footer {
             background-color: #333333;
             width: 100%;
@@ -43,14 +134,17 @@
             bottom: 0;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
         }
+
         .footer a {
             margin: 0 10px;
         }
+
         .footer img {
             width: 50px;
             height: 50px;
             cursor: pointer;
         }
+
         .settings-button {
             position: absolute;
             top: 10px;
@@ -59,6 +153,7 @@
             width: 30px;
             height: 30px;
         }
+
         .settings-container {
             display: none;
             position: absolute;
@@ -71,12 +166,14 @@
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
         }
+
         .settings-header {
             font-size: 16px;
             font-weight: bold;
             text-align: center;
             margin-bottom: 10px;
         }
+
         .settings-option {
             padding: 10px;
             margin: 5px 0;
@@ -85,9 +182,11 @@
             cursor: pointer;
             text-align: left;
         }
+
         .settings-option:hover {
             background-color: #444444;
         }
+
         .color-picker {
             padding: 10px;
             margin: 5px 0;
@@ -98,6 +197,7 @@
             cursor: pointer;
             user-select: none; /* Zapobiega zaznaczaniu tekstu */
         }
+
         .color-picker input {
             border: none; /* Usunięcie obramowania */
             background: none; /* Usunięcie tła */
@@ -105,9 +205,18 @@
             height: 30px; /* Domyślna wysokość pola wyboru koloru */
             cursor: pointer;
         }
+
         .color-code {
             margin-left: 10px; /* Odstęp od pola wyboru koloru */
             font-size: 14px; /* Rozmiar czcionki kodu koloru */
+        }
+
+        .page {
+            display: none;
+        }
+
+        .show {
+            display: block;
         }
     </style>
     <script>
@@ -155,6 +264,11 @@
             saveTheme(theme);
         }
         
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.style.left = sidebar.style.left === '0px' ? '-250px' : '0px';
+        }
+        
         function toggleSettings() {
             const container = document.getElementById('settings-container');
             if (container.style.display === 'block') {
@@ -163,7 +277,7 @@
                 container.style.display = 'block';
             }
         }
-
+        
         function changeBackgroundColor(event) {
             const color = event.target.value;
             setCustomTheme(color);
@@ -174,6 +288,12 @@
         function updateColorCode(color) {
             const colorCode = document.getElementById('color-code');
             colorCode.textContent = color.toUpperCase();
+        }
+
+        function showPage(page) {
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(p => p.classList.remove('show'));
+            document.getElementById(page).classList.add('show');
         }
 
         document.addEventListener('DOMContentLoaded', function() {
@@ -192,17 +312,55 @@
                 const colorInput = document.getElementById('color-input');
                 colorInput.click(); // Kliknięcie w pole wyboru koloru
             });
+
+            // Kliknięcie logo na stronie głównej
+            document.querySelector('.logo').addEventListener('click', function() {
+                window.location.href = 'https://blith621333828.github.io/blithweb/';
+            });
+
+            // Wyświetl stronę główną domyślnie
+            showPage('home');
         });
     </script>
 </head>
 <body>
-    <div class="content">
-        <img src="blith.png" alt="Blith Logo" class="logo">
-        <div class="description">
-            <h1>Blith</h1>
-            <p>Witaj na stronie Blith! Jestem entuzjastą muzyki, który uwielbia jeździć na desce, grać w koszykówkę i spędzać czas na tworzeniu stron internetowych. Poza tym eksperymentuję z botami Discord, starając się ciągle rozwijać swoje umiejętności techniczne. Na tej stronie znajdziesz informacje o moich projektach, zainteresowaniach oraz linki do moich profili społecznościowych.</p>
+    <div id="sidebar" class="sidebar">
+        <div class="sidebar-header">Menu</div>
+        <a href="javascript:void(0);" class="sidebar-item" onclick="showPage('home')">Strona główna</a>
+        <a href="javascript:void(0);" class="sidebar-item" onclick="showPage('projects')">Projekty</a>
+        <a href="javascript:void(0);" class="sidebar-item" onclick="showPage('contact')">Kontakt</a>
+    </div>
+    <img src="poll.png" alt="Menu" class="menu-button" onclick="toggleSidebar()">
+    
+    <div id="content-container">
+        <!-- Strona główna -->
+        <div id="home" class="page show">
+            <div class="content">
+                <img src="blith.png" alt="Blith Logo" class="logo">
+                <div class="description">
+                    <h1>Blith</h1>
+                    <p>Witaj na stronie Blith! Jestem entuzjastą muzyki, który uwielbia jeździć na desce, grać w koszykówkę i spędzać czas na tworzeniu stron internetowych. Poza tym eksperymentuję z botami Discord, starając się ciągle rozwijać swoje umiejętności techniczne. Na tej stronie znajdziesz informacje o moich projektach, zainteresowaniach oraz linki do moich profili społecznościowych.</p>
+                </div>
+            </div>
+        </div>
+        <!-- Projekty -->
+        <div id="projects" class="projects-container page">
+            <div class="projects-header">PROJEKTY ZESPOŁOWE</div>
+            <a href="https://blith621333828.github.io/blithbot/" class="project-button">BlithBot</a>
+            <a href="https://discord.gg/9dzkYcnhMB" class="project-button">BuooBot</a>
+            <a href="https://blith621333828.github.io/sentinelweb/" class="project-button">Sentinel</a>
+            <a href="https://blith621333828.github.io/embedcreator/" class="project-button">EmbedCreator</a>
+            <div class="minigames-header">MINIGRY</div>
+            <a href="https://blith621333828.github.io/TicTacToe/" class="project-button">TicTacToe</a>
+            <a href="https://blith621333828.github.io/2048game/" class="project-button">2048</a>
+            <a href="https://blith621333828.github.io/BreakoutGame/" class="project-button">BreakOut</a>
+        </div>
+        <!-- Kontakt -->
+        <div id="contact" class="coming-soon page">
+            Coming Soon
         </div>
     </div>
+
     <div class="footer" id="footer">
         <a href="https://www.instagram.com/playboi_blith/" class="instagram-button">
             <img src="ig.png" alt="Instagram">
@@ -214,6 +372,7 @@
             <img src="discord.png" alt="Discord">
         </a>
     </div>
+
     <img src="edit.png" alt="Settings" class="settings-button" onclick="toggleSettings()">
     <div id="settings-container" class="settings-container">
         <div class="settings-header">Wybierz motyw</div>
