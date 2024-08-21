@@ -8,6 +8,13 @@
     <meta name="theme-color" content="#00ffff">
     <link rel="icon" href="blith.png" type="image/png">
     <style>
+.contact-icon {
+    width: 150px; /* Możesz dostosować rozmiar według potrzeb */
+    height: auto;
+    margin-left: 1000px; /* Odstęp od tekstu, możesz dostosować wartość */
+}
+
+    
         body {
             background-color: #36393F;
             height: 100vh;
@@ -85,10 +92,13 @@
         }
 
         .projects-header {
-            font-size: 24px;
+        
+font-size: 24px;
             font-weight: bold;
-            margin-bottom: 20px;
-            text-align: left;
+            margin: 20px 0;
+            text-align: center;
+            border-top: 1px solid #555555;
+            padding-top: 10px;
         }
 
         .project-button {
@@ -328,21 +338,25 @@
         <div class="sidebar-header">Menu</div>
         <a href="javascript:void(0);" class="sidebar-item" onclick="showPage('home')">Strona główna</a>
         <a href="javascript:void(0);" class="sidebar-item" onclick="showPage('projects')">Projekty</a>
-        <a href="javascript:void(0);" class="sidebar-item" onclick="showPage('contact')">Kontakt</a>
+        <a href="javascript:void(0);" class="sidebar-item" onclick="showPage('contact')">Twórcy</a>
     </div>
     <img src="poll.png" alt="Menu" class="menu-button" onclick="toggleSidebar()">
     
     <div id="content-container">
         <!-- Strona główna -->
         <div id="home" class="page show">
-            <div class="content">
-                <img src="blith.png" alt="Blith Logo" class="logo">
-                <div class="description">
-                    <h1>Blith</h1>
-                    <p>Witaj na stronie Blith! Jestem entuzjastą muzyki, który uwielbia jeździć na desce, grać w koszykówkę i spędzać czas na tworzeniu stron internetowych. Poza tym eksperymentuję z botami Discord, starając się ciągle rozwijać swoje umiejętności techniczne. Na tej stronie znajdziesz informacje o moich projektach, zainteresowaniach oraz linki do moich profili społecznościowych.</p>
-                </div>
+    <div class="content">
+        <img src="blith.png" alt="Blith Logo" class="logo">
+        <div class="description">
+            <div style="display: flex; align-items: center;">
+                <h1>Blith</h1>
+                <img src="wumpus1.png" alt="Wumpus" style="width: 50px; height: auto; margin-left: 10px;">
             </div>
+            <p>Witaj na stronie Blith! Jestem entuzjastą muzyki, który uwielbia jeździć na desce, grać w koszykówkę i spędzać czas na tworzeniu stron internetowych. Poza tym eksperymentuję z botami Discord, starając się ciągle rozwijać swoje umiejętności techniczne. Na tej stronie znajdziesz informacje o moich projektach, zainteresowaniach oraz linki do moich profili społecznościowych.</p>
         </div>
+    </div>
+</div>
+
         <!-- Projekty -->
         <div id="projects" class="projects-container page">
             <div class="projects-header">PROJEKTY ZESPOŁOWE</div>
@@ -356,10 +370,27 @@
             <a href="https://blith621333828.github.io/BreakoutGame/" class="project-button">BreakOut</a>
         </div>
         <!-- Kontakt -->
-        <div id="contact" class="coming-soon page">
-            Coming Soon
-        </div>
+<div id="contact" class="page">
+    <div class="coming-soon" style="font-size: 16px; text-align: left;">
+        <p>
+            <a href="https://discord.com/users/814172399754149938" style="color: #ffffff; text-decoration: none;">Blith</a>
+            - Autor tej strony oraz serwera
+            <a href="https://discord.gg/tprMsdVemD" style="color: #cc190c; text-decoration: none;">Aushwitz</a>
+        </p>
+        <p>
+            <a href="https://discord.com/users/1002243141971230800" style="color: #ffffff; text-decoration: none;">Frugo</a>
+            - Dzięki niemu stoi ta strona autor 
+            <a href="https://www.buoobot.ovh/" style="color: #ffffff; text-decoration: none;">BuooBot</a>
+            i 
+            <a href="https://blog.darkmord.pl/" style="color: #ffffff; text-decoration: none;">DarkMord Blog</a>
+            <img src="wumpus2.png" alt="Wumpus" class="contact-icon">
+        </p>
     </div>
+</div>
+
+
+
+
 
     <div class="footer" id="footer">
         <a href="https://www.instagram.com/playboi_blith/" class="instagram-button">
